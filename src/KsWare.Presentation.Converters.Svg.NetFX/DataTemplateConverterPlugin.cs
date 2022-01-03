@@ -1,28 +1,18 @@
 ﻿using System;
 using System.ComponentModel.Composition;
-using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Markup;
 using System.Xml;
-using KsWare.Presentation.Interfaces.Plugins.ResourceConverter;
+using KsWare.Presentation.Interfaces.Plugins.DataTemplateConverter;
 using SharpVectors.Converters;
 
 namespace KsWare.Presentation.Converters.Svg
 {
-	[Export(typeof(ResourceConverterPlugin)), ResourceConverterPluginExportMetadata("image/svg+xml")]
-	public sealed class ResourceConverterPlugin : IResourceConverterPlugin
+	[Export(typeof(IDataTemplateConverterPlugin)), DataTemplateConverterPluginExportMetadata("image/svg+xml")]
+	public sealed class DataTemplateConverterPlugin : IDataTemplateConverterPlugin
 	{
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-			if (typeof(DataTemplate).IsAssignableFrom(targetType)) return CreateDataTemplate(value);
-			throw new NotImplementedException("Conversion not supported");
-		}
-
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
-			throw new NotImplementedException();
-		}
-
-		private object CreateDataTemplate(object content)
+        public DataTemplate CreateDataTemplate(object content)
         {
 	        var locationUri = (Uri) content;
 			// REQUIRES: PM> Install-Package SharpVectors
@@ -39,8 +29,5 @@ namespace KsWare.Presentation.Converters.Svg
             var dataTemplate = (DataTemplate)XamlReader.Load(xr);
             return dataTemplate;
         }
-
-
-
-	}
+    }
 }
