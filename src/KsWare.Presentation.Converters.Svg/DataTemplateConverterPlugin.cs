@@ -8,11 +8,11 @@ using System.Xml;
 using KsWare.Presentation.Interfaces.Plugins.ResourceConverter;
 using SharpVectors.Converters;
 
-namespace KsWare.Presentation.Converters.Svg
-{
+namespace KsWare.Presentation.Converters.Svg {
+
 	[Export(typeof(ResourceConverterPlugin)), ResourceConverterPluginExportMetadata("image/svg+xml")]
-	public sealed class ResourceConverterPlugin : IResourceConverterPlugin
-	{
+	public sealed class ResourceConverterPlugin : IResourceConverterPlugin {
+
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
 			if (typeof(DataTemplate).IsAssignableFrom(targetType)) return CreateDataTemplate(value);
 			throw new NotImplementedException("Conversion not supported");
@@ -22,8 +22,7 @@ namespace KsWare.Presentation.Converters.Svg
 			throw new NotImplementedException();
 		}
 
-		private object CreateDataTemplate(object content)
-        {
+		private object CreateDataTemplate(object content) {
 	        var locationUri = (Uri) content;
 			// REQUIRES: PM> Install-Package SharpVectors
 			var dummy = new SvgViewbox(); //WORKAROUND
@@ -39,8 +38,5 @@ namespace KsWare.Presentation.Converters.Svg
             var dataTemplate = (DataTemplate)XamlReader.Load(xr);
             return dataTemplate;
         }
-
-
-
 	}
 }

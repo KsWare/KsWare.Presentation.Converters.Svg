@@ -1,3 +1,6 @@
+# 0.3
+- remove TargetFrameworks: net452, net46, net5.0-windows
+- add TargetFrameworks: net462
 # 0.2
 - [2022-01-03]
 - use SharpVectors.Reloaded 1.7.7
